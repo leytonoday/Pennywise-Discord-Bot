@@ -1,4 +1,5 @@
 import { Client, Intents, Collection, Message, TextChannel, GuildMember } from "discord.js"
+import { commands } from "./data/commonData"
 import { sendEmbed } from "./utils"
 import config from "./config.json"
 import Command from "./command"
@@ -39,6 +40,7 @@ export default class Bot {
       for (const file of files) {
         const command = (await import(`${commandsFolder}/${folder}/${file}`)).default
         this.commands.set(command.name, command)
+        commands.set(command.name, command) // this is for the commonData folder, so that the commands are accessible outside of this class 
       }
     }
   }
@@ -85,7 +87,6 @@ export default class Bot {
       command.execute(message, args)
 
     } catch (error) {
-      console.log(error)
       if (typeof error === "string")
         sendEmbed(message, "Error", error)
       else 
@@ -109,7 +110,7 @@ export default class Bot {
 
   getCommand(message: Message): Command | undefined {
     const commandName = message.content.slice(config.prefix.length).trim().split(/ +/)[0].toLowerCase()
-    return this.commands.get(commandName) || this.commands.find(command => command.aliases !== undefined && command.aliases.includes(commandName))
+    return this.commands.get(commandName) || this.commands.find(command => command.aliases !== undefined && command.aliases.includes(commandName)) // Check aliases also
   }
 
   isCallerLocationValid(message: Message, command: Command): boolean {

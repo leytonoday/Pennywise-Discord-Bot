@@ -1,5 +1,7 @@
 import { Message, PermissionString } from "discord.js"
 
+export type CommandExecution = (message: Message, args: any[]) => Promise<void>
+
 type Command = {
   name: string
   description: string
@@ -9,7 +11,7 @@ type Command = {
   usage?: string
   aliases?: string[]
   cooldown?: number
-  execute: (message: Message, args?: any[]) => Promise<void>
+  execute: CommandExecution
 }
 
 export default Command

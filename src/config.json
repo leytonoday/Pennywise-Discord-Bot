@@ -2,6 +2,11 @@
   "token": "NzEwOTc3MTE4MTU0MjYwNTAy.XwUQwg.VBT3SOQWLJZrxuCbJij1PTLCW58",
   "name": "Pennywise",
   "prefix": "!",
-  "embedColour": 10927757,
-  "defaultCooldown": 5000
+  "embedColour": 16066086,
+  "defaultCooldown": 5000,
+  "PGUSER": "postgres",
+  "PGPASSWORD": "password",
+  "PGHOST": "127.0.0.1",
+  "PGPORT": 5432,
+  "PGDATABASE": "pennywise_bot"
 }
