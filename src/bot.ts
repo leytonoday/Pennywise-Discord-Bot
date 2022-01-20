@@ -1,7 +1,9 @@
-import { sendEmbed }  from "./utils"
-import { commands }   from "./data/commonData"
+import { sendEmbed, queryDatabase }  from "./utils"
+import { commands }   from "./data/common"
+import { Intro }      from "./data/types"
 import Command        from "./command"
 import config         from "./config.json"
+import ytdl           from "ytdl-core"
 import path           from "path"
 import util           from "util"
 import fs             from "fs"
@@ -11,7 +13,17 @@ import {
   Collection,
   Message, 
   TextChannel, 
-  GuildMember } from "discord.js"
+  GuildMember, 
+  VoiceState,
+  User } from "discord.js"
+import { 
+  joinVoiceChannel, 
+  DiscordGatewayAdapterCreator, 
+  createAudioResource, 
+  createAudioPlayer, 
+  StreamType, 
+  AudioPlayerStatus,
+  VoiceConnectionStatus } from "@discordjs/voice"
 
 export default class Bot {
   client: Client
@@ -62,10 +74,13 @@ export default class Bot {
     this.client.on("messageCreate", (message: Message) =>
       this.handleMessage(message)
     )
+    this.client.on("voiceStateUpdate", (oldState: VoiceState, newState: VoiceState) => 
+      this.handleVoiceStateUpdate(oldState, newState)
+    )
   }
   
   handleMessage(message: Message) {
-    if (!this.hasPrefix(message) || this.isAuthorBot(message))
+    if (!this.hasPrefix(message) || this.isUserBot(message.author))
       return
       
     const command = this.getCommand(message)
@@ -99,12 +114,41 @@ export default class Bot {
     }
   }
 
+  async handleVoiceStateUpdate (oldState: VoiceState, newState: VoiceState) {
+    if (!oldState.channel && newState.channel) { // If the user has joined the VC not coming from another one
+      const member = newState.member as GuildMember
+
+      if (this.isUserBot(member.user)) 
+        return
+
+      const intro = await queryDatabase("SELECT * FROM intros WHERE id=$1", undefined, member.id) as Intro[]
+      if (!intro[0]) 
+        return
+
+      // Join VC & create AudioPlayer
+      const connection = joinVoiceChannel({
+        channelId: newState.channel.id,
+        guildId: member.guild.id as string,
+        adapterCreator: member.guild.voiceAdapterCreator as DiscordGatewayAdapterCreator
+      })
+      connection.on(VoiceConnectionStatus.Disconnected, () => connection.destroy()) // If forcefully disconnected, destroy connection
+
+      const audioPlayer = createAudioPlayer()
+      audioPlayer.on(AudioPlayerStatus.Idle, () => connection.destroy())
+      connection.subscribe(audioPlayer)
+      
+      // Play YouTube link
+      const audioResource = createAudioResource(ytdl(intro[0].link, { filter: 'audioonly' }), { inputType: StreamType.Arbitrary })
+      audioPlayer.play(audioResource)
+    }
+  }
+
   hasPrefix(message: Message): boolean {
     return message.content.startsWith(config.prefix)
   }
 
-  isAuthorBot(message: Message): boolean {
-    return message.author.bot
+  isUserBot(user: User): boolean {
+    return user.bot
   }
 
   getArguments(message: Message): string[] {

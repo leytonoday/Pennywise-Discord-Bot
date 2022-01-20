@@ -1,4 +1,4 @@
-import { languages }  from "../../data/commonData"
+import { languages }  from "../../data/common"
 import { sendEmbed }  from "../../utils"
 import { Message }    from "discord.js"
 import Command        from "../../command"

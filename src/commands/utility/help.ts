@@ -1,5 +1,5 @@
 import { sendEmbed }  from '../../utils'
-import { commands }   from "../../data/commonData" 
+import { commands }   from "../../data/common" 
 import { Message }    from "discord.js"
 import Command        from "../../command"
 import config         from "../../config.json"

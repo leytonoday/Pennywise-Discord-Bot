@@ -1,6 +1,6 @@
 import { MessageEmbed, Message } from "discord.js"
 import { embedColour } from "./config.json"
-import { databaseClients } from "./data/commonData"
+import { databaseClients } from "./data/common"
 import format from "pg-format"
 import { Channel, Intro } from "./data/types"
 

@@ -1,5 +1,6 @@
 import { queryDatabase, sendEmbed } from "../../utils"
-import { languages }                from "../../data/commonData"
+import { Readable }                 from "stream"
+import { languages }                from "../../data/common"
 import { Channel }                  from "../../data/types"
 import { Message }                  from "discord.js"
 import Command                      from "../../command"
@@ -27,9 +28,9 @@ const command: Command = {
     if (!vcId) 
       return sendEmbed(message, "Error", "Either the speficied VC hasn't been added yet (use adv), or you aren't in a VC. In the latter case, you must specify the VC name in quotes after the say command")
     
-    // Remove channel name if the user not in VC so the bot doesn't say it. It leaves the quotes in, but that doesn't affect the audio
+    // Remove channel name if the user not in VC so the bot doesn't say it.
     if (isCallerExternal(message)) 
-      textToSay = textToSay.replace(getChannelName(textToSay), "") 
+      textToSay = textToSay.replace(getChannelNameWithQuotes(textToSay), "")
 
     // Error handle text input
     if (!textToSay)
@@ -53,9 +54,11 @@ const command: Command = {
     const audioPlayer = createAudioPlayer()
     audioPlayer.on(AudioPlayerStatus.Idle, () => connection.destroy())
     connection.subscribe(audioPlayer)
+    
+    const readableAudioStream = await createReadableAudioStream(textToSay, languageCode)
 
     // Play text-to-speech
-    const audioResource = createAudioResource(`data:audio/ogg;base64,${await textToSpeech(textToSay, languageCode)}`, { inputType: StreamType.OggOpus })
+    const audioResource = createAudioResource(readableAudioStream, { inputType: StreamType.Arbitrary })
     audioPlayer.play(audioResource)
   }
 }
@@ -101,9 +104,24 @@ function getChannelName(input: string): string {
   return ""
 }
 
+function getChannelNameWithQuotes(input: string): string {
+  const regexMatches = input.match(/["']\s*(.*?)\s*["']/) // get text WITH quotes, single quites or double
+  if (regexMatches !== null)
+    return regexMatches[0]
+  return ""
+}
+
 function getLanguageCode(args: string[]): string | undefined {
   const languageCodes = languages.map(language => language.code)
   return args.find(arg => languageCodes.includes(arg))
+}
+
+async function createReadableAudioStream(textToSay: string, languageCode: string | undefined): Promise<Readable> {
+  const audioBuffer = Buffer.from(await textToSpeech(textToSay, languageCode), "base64")
+  let readable = new Readable()
+  readable.push(audioBuffer)
+  readable.push(null)
+  return readable
 }
 
 async function textToSpeech(input: string, languageCode: string | undefined): Promise<string> {

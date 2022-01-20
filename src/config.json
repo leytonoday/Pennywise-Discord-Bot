@@ -1,5 +1,5 @@
 {
-  "token": "NzEwOTc3MTE4MTU0MjYwNTAy.XwUQwg.VBT3SOQWLJZrxuCbJij1PTLCW58",
+  "token": "<Your Token Here>",
   "name": "Pennywise",
   "prefix": "!",
   
@@ -14,5 +14,5 @@
   "pgPort": 5432,
   "pgDatabase": "pennywise_bot",
 
-  "ttsApiKey": "<Your key here>"
+  "ttsApiKey": "<Your Token Here>"
 }
