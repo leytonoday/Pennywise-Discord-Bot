@@ -14,5 +14,5 @@
   "pgPort": 5432,
   "pgDatabase": "pennywise_bot",
 
-  "ttsApiKey": "<Your Token Here>"
+  "ttsApiKey": "<Your API Key Here>"
 }
