@@ -8,7 +8,7 @@ I created this bot for 2 reasons:
 - To practice my TypeScript after reading Modern JavaScript for the Impatient by Cay S. Horstmann and Programming TypeScript by Boris Cherny
 - To create a unique feature to attract users to my discord server
 
-This program was written using NodeJS with TypeScript, and uses PostgreSQL to store it's data. Assuming your server is running on Ubuntu, or some other flavour of linux, then this video will show 
+This program was written using NodeJS with TypeScript, and uses PostgreSQL to store it's data. Assuming your server is running on Ubuntu, or some other flavour of linux, this video will show 
 you how to set up the PostgreSQL database: https://www.youtube.com/watch?v=-LwI4HMR_Eg&t=649s. 
 
 ## Features
