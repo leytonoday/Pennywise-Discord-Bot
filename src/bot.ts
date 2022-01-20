@@ -1,11 +1,17 @@
-import { Client, Intents, Collection, Message, TextChannel, GuildMember } from "discord.js"
-import { commands } from "./data/commonData"
-import { sendEmbed } from "./utils"
-import config from "./config.json"
-import Command from "./command"
-import path from "path"
-import util from "util"
-import fs from "fs"
+import { sendEmbed }  from "./utils"
+import { commands }   from "./data/commonData"
+import Command        from "./command"
+import config         from "./config.json"
+import path           from "path"
+import util           from "util"
+import fs             from "fs"
+import { 
+  Client, 
+  Intents, 
+  Collection,
+  Message, 
+  TextChannel, 
+  GuildMember } from "discord.js"
 
 export default class Bot {
   client: Client
@@ -30,7 +36,6 @@ export default class Bot {
 
   private async loadCommands() {
     const commandsFolder = path.join(process.cwd(), "dist/commands")
-    
     const readDir = util.promisify(fs.readdir)
     const folders = await readDir(commandsFolder)
     

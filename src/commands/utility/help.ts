@@ -1,8 +1,8 @@
-import { Message } from "discord.js"
-import Command from "../../command"
-import { commands } from "../../data/commonData" 
-import { sendEmbed } from '../../utils'
-import config from "../../config.json"
+import { sendEmbed }  from '../../utils'
+import { commands }   from "../../data/commonData" 
+import { Message }    from "discord.js"
+import Command        from "../../command"
+import config         from "../../config.json"
 
 const command: Command = {
   name: "help",

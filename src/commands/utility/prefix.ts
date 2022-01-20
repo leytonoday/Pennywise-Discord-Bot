@@ -1,6 +1,6 @@
-import { prefix } from "../../config.json"
-import { Message } from "discord.js"
-import Command from "../../command"
+import { Message }  from "discord.js"
+import { prefix }   from "../../config.json"
+import Command      from "../../command"
 
 const command: Command = {
   name: "prefix",

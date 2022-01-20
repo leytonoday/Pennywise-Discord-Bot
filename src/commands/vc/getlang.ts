@@ -1,7 +1,7 @@
-import { Message } from "discord.js"
-import Command from "../../command"
-import { sendEmbed } from "../../utils"
-import { languages } from "../../data/commonData"
+import { languages }  from "../../data/commonData"
+import { sendEmbed }  from "../../utils"
+import { Message }    from "discord.js"
+import Command        from "../../command"
 
 const command: Command = {
   name: "getlang",

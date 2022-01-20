@@ -1,23 +1,19 @@
-import Command from "../command"
 import { Collection } from "discord.js"
-import { Pool } from "pg"
-import config from "../config.json"
+import { Language }   from "./types"
+import { Pool }       from "pg"
+import Command        from "../command"
+import config         from "../config.json"
 
 // Populated by bot.ts. This is made to make commands accessible outside of this class 
 export let commands: Collection<string, Command> = new Collection()
 
 export const databaseClients = new Pool({
-  host: config.PGHOST,
-  user: config.PGUSER,
-  port: config.PGPORT,
-  password: config.PGPASSWORD,
-  database: config.PGDATABASE
+  host: config.phHost,
+  user: config.pgUser,
+  port: config.pgPort,
+  password: config.pgPassword,
+  database: config.pgDatabase
 })
-
-type Language = { 
-  code: string,
-  name: string
-}
 
 export const languages: Language[] = [
   {code: "af-ZA", name: "Afrikaans"},

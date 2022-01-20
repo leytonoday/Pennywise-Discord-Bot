@@ -1,6 +1,6 @@
-import { Message } from "discord.js"
-import Command from "../../command"
 import { sendEmbed, queryDatabase } from '../../utils'
+import { Message }                  from "discord.js"
+import Command                      from "../../command"
 
 const command: Command = {
   name: "getvc",
