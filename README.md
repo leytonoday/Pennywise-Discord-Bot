@@ -1,4 +1,7 @@
 # Pennywise-Discord-Bot
+<div align="center">
+<img src="https://user-images.githubusercontent.com/36010516/150417811-6fbb3737-7209-45ae-8f3b-efd6d98f3fbd.png" width="150" height="150">
+</div>
 
 The Pennywise Discord bot is used to aid users who do not have a microphone, or are untable to talk and to make voice chats a more personized experience. 
 I created this bot for 2 reasons:
