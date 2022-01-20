@@ -14,7 +14,7 @@ you how to set up the PostgreSQL database: https://www.youtube.com/watch?v=-LwI4
 ## Features
 This bot has two unique features, which are:
 - Google Cloud API text-to-speech, for a rich sounding synthesized voice, supporting many languages
-- Voice Chat introductions. This can be set by the user using the ```!setintro``` command. The intro can be a 5 second YouTube video, the audio from which will be played
+- Voice chat introductions. This can be set by the user using the ```!setintro``` command. The intro can be a 5 second YouTube video, the audio from which will be played
 every time then user joins the VC
 
 
