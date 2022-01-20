@@ -75,7 +75,7 @@ async function getVcId(message: Message, textToSay: string): Promise<string> {
       return ""
     
     try {
-      const currentlyAddedVcs = await queryDatabase("SELECT * FROM %I", message.guildId as string)
+      const currentlyAddedVcs = await queryDatabase("SELECT * FROM %I", message.guildId as string) as Channel[]
       const targetVC: Channel | undefined = currentlyAddedVcs.find(vc => vc.name === channelName)
 
       if (!targetVC)

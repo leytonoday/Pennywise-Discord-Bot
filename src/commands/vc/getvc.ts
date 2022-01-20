@@ -1,4 +1,5 @@
 import { sendEmbed, queryDatabase } from '../../utils'
+import { Channel }                  from "../../data/types"
 import { Message }                  from "discord.js"
 import Command                      from "../../command"
 
@@ -13,7 +14,7 @@ const command: Command = {
     try {
       await createTableIfNotExist(guildId)
 
-      const vcs = await queryDatabase("SELECT * FROM %I", guildId)
+      const vcs = await queryDatabase("SELECT * FROM %I", guildId) as Channel[]
       
       let vcStrings = vcs.map(vc => `${vc.name} - ${vc.id}`)
       if (!vcStrings.length)

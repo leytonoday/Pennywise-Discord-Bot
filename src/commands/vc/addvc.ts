@@ -1,4 +1,5 @@
 import { sendEmbed, queryDatabase } from '../../utils'
+import { Channel }                  from "../../data/types"
 import { Message }                  from "discord.js"
 import Command                      from "../../command"
 
@@ -24,7 +25,7 @@ const command: Command = {
     try {
       await createTableIfNotExist(guildId)
 
-      const currentlyAddedVcs = await queryDatabase("SELECT * from %I", guildId)
+      const currentlyAddedVcs = await queryDatabase("SELECT * from %I", guildId) as Channel[]
 
       if (currentlyAddedVcs.find(vc => vc.name == channelName)) 
         return sendEmbed(message, "Error", "A VC of the same name has already been added")

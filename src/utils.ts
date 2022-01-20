@@ -2,7 +2,7 @@ import { MessageEmbed, Message } from "discord.js"
 import { embedColour } from "./config.json"
 import { databaseClients } from "./data/commonData"
 import format from "pg-format"
-import { Channel } from "./data/types"
+import { Channel, Intro } from "./data/types"
 
 export function sendEmbed(message: Message, title: string, description: string) {
   const embed = new MessageEmbed()
@@ -12,9 +12,9 @@ export function sendEmbed(message: Message, title: string, description: string) 
   message.channel.send({embeds: [embed]})
 }
 
-export async function queryDatabase(query: string, guildId: string, ...args: string[]) : Promise<Channel[]> {
+export async function queryDatabase(query: string, guildId?: string, ...args: string[]) : Promise<(Channel | Intro)[]> {
   const databaseClient = await databaseClients.connect()
-  let data: Channel[] = []
+  let data = []
 
   try {
     const { rows } = await databaseClient.query(format(query, guildId), args)

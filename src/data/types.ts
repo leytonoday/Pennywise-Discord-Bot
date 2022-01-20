@@ -7,3 +7,8 @@ export type Channel = {
   name: string
   id: string
 }
+
+export type Intro = {
+  id: string,
+  link: string
+}

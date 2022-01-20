@@ -6,6 +6,7 @@
   "embedColour": 16066086,
   "defaultCooldown": 5000,
   "sayCharLimit": 300,
+  "introLengthLimitSeconds": 5,
 
   "pgUser": "postgres",
   "pgPassword": "password",
